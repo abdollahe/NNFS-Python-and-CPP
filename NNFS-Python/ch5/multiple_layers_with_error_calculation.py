@@ -38,7 +38,6 @@ class Softmax_activation:
 
 class CrossEntropyLoss:
     def CalculateLoss(self, y_prediction, y_actual):
-        print(f"I am here : {y_actual.shape} and len is: {len(y_actual.shape)}")
         neg_log = 0.0
 
         if len(y_actual.shape) == 1:
@@ -57,6 +56,11 @@ class CrossEntropyLoss:
 
 # Create dataset
 X, y = spiral_data(samples=1, classes=3)
+print("X is:")
+print(X)
+print("======")
+print("y is: ")
+print(y)
 # Create Dense layer with 2 input features and 3 output values
 dense1 = Dense_Layer(num_of_input=2, num_of_neurons=3)
 # Create ReLU activation (to be used with Dense layer):

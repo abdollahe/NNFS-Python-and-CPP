@@ -3,6 +3,7 @@
 #include <Activation_Functions.h>
 #include <helper.h>
 #include <Dense_Layer.h>
+#include <Cross_Entropy.h>
 #include <iostream>
 
 
@@ -10,6 +11,10 @@ int main() {
    
     // Create dataset
     auto data = create_data(1 , 3) ;
+
+    std::cout << data.first << std::endl ;
+
+    std::cout << data.second << std::endl ;
 
     // Create Dense layer with 2 input features and 3 output values
     DenseLayer* layer1 = new DenseLayer(3 ,2) ;
@@ -36,9 +41,23 @@ int main() {
     // it takes the output of second dense layer here
     auto output2_activated = activations->softmax_activation(output2) ;
 
+
     std :: cout << "The shape of the final output is:" << output2_activated.rows() << "x" << output2_activated.cols() << std::endl ;
     
     std:: cout << output2_activated << std::endl; 
+
+    CrossEntropyError* error = new CrossEntropyError() ;
+
+    Eigen::MatrixXd converted = data.second.transpose().cast<double>() ;
+
+    auto mean_error = error->calculate_error(output2_activated , converted) ;
+
+    std::cout << "Error is: " << mean_error << std::endl ;
+
+    delete layer1 ;
+    delete layer2 ;
+    delete activations ;
+    delete error ;
 
     return 0 ;
 
